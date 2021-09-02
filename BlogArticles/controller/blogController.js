@@ -26,3 +26,8 @@ exports.showBlog = async (req,res)=>{
     if(article ==null)res.redirect('/')
         res.render('articles/show', {article:article})
 }
+
+exports.deleteBlog = async (req,res)=>{
+    await Article.findByIdAndDelete(req.params.id)
+    res.redirect('/')
+}
