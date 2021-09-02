@@ -1,6 +1,6 @@
 const express = require('express')
 const Article = require('./../models/article')
-const { addBlog, showBlog, returnBlog, deleteBlog, editBlog} = require('../controller/blogController')
+const {  showBlog, returnBlog, deleteBlog, addAndEditBlog} = require('../controller/blogController')
 
 const router = express.Router()
 
@@ -19,9 +19,15 @@ router.get('/:id',showBlog)
 
 
 
-router.post('/',addBlog)
-
-router.put('/:id',editBlog)
+router.post('/', async (req, res, next) => {
+    req.article = new Article()
+    next()
+  }, addAndEditBlog('new'))
+  
+  router.put('/:id', async (req, res, next) => {
+    req.article = await Article.findById(req.params.id)
+    next()
+  }, addAndEditBlog('edit'))
 
 
 router.delete('/:id', deleteBlog)
