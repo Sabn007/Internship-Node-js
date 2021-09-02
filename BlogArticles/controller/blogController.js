@@ -26,6 +26,20 @@ exports.showBlog = async (req,res)=>{
     if(article ==null)res.redirect('/')
         res.render('articles/show', {article:article})
 }
+exports.editBlog = async (res,req) => {
+    let article = req.article
+      article.title=req.body.title
+      article.description =req.body.description
+      article.markdown =req.body.markdown
+  
+  try{
+     article =  await article.save()
+     res.redirect(`/articles/${article.id}`)
+  
+  }catch(e){
+      res.render("articles/edit", {article :article})
+  }
+  }
 
 exports.deleteBlog = async (req,res)=>{
     await Article.findByIdAndDelete(req.params.id)
