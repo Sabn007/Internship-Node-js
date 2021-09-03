@@ -17,7 +17,9 @@ router.get('/edit/:id', async (req,res) =>{
 
 router.get('/:id',showBlog)
 
-
+/* ------Without Middleware for adding and editing-----*/
+// router.get('/',addBlog)
+// router.get('/:id',editBlog)
 
 router.post('/', async (req, res, next) => {
     req.article = new Article()

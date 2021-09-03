@@ -5,7 +5,13 @@ const Article = require('./models/article')
 const methodOverride = require('method-override')
 const app = express()
 
-mongoose.connect('mongodb://localhost/blog')
+mongoose.connect('mongodb://localhost/blog').then(() => {
+    // listing to server
+    app.listen(3000, () => {
+        console.log(`Server running on port 3000`)
+        console.log('database connected')
+    })
+}).catch(err => console.log(err))
 
 app.set('view engine', "ejs")
 
@@ -21,4 +27,3 @@ app.get('/',async(req,res)=>{
 })
 
 app.use('/articles',articleRouter)
-app.listen(5000, ()=>console.log('Server Running at http://localhost:5000'))
