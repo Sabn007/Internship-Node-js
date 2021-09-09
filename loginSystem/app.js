@@ -6,8 +6,11 @@ const mongoose = require("mongoose");
 const User = require("./models/user");
 const passport = require("passport");
 const localStorage = require("passport-local");
-const bcrypt = require("bcrypt");
+
 const app = express();
+
+const {registerUser,setupAdmin,localStorageFun} = require('./Controller/controller')
+const {home,login,logout} = require('./Controller/getPostController')
 
 mongoose
   .connect("mongodb://localhost/login")
@@ -47,22 +50,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-  new localStorage(function (username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) return done(err);
-      if (!user) {
-        return done(null, false), { message: "Incorrect username" };
-      }
-      bcrypt.compare(password, user.password, function (err, res) {
-        if (err) return done(err);
-
-        if (res === false) {
-          return done(null, false, { message: "incorrect password" });
-        }
-        return done(null, user);
-      });
-    });
-  })
+  new localStorage(localStorageFun)
 );
 
 function isLoggedIn(req, res, next) {
@@ -75,82 +63,23 @@ function isLoggedOut(req, res, next) {
   res.redirect("/");
 }
 // Routes
-app.get("/", isLoggedIn, (req, res) => {
-  res.render("index", { title: "Home" });
-});
+app.get("/", isLoggedIn, home);
 
-app.get("/login", isLoggedOut, (req, res) => {
-  const response = {
-    title: "Login",
-    error: req.query.error,
-  };
-  res.render("login", response);
-});
+app.get("/login", isLoggedOut,login);
 
-app.post(
-  "/login",
-  passport.authenticate("local", {
+app.post("/login", passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login?error=true",
   })
 );
 
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
+app.get("/logout",logout);
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
 // For Registration
-app.post("/register", async (req, res) => {
-  try {
-    let foundUser = User.find((data) => req.body.username === data.username);
-    if (!foundUser) {
-      let hashPassword = await bcrypt.hash(req.body.password, 10);
-
-      let newUser = {
-        id: Date.now(),
-        username: req.body.username,
-        email: req.body.email,
-        password: hashPassword,
-      };
-      User.push(newUser);
-      console.log("User list", User);
-
-      res.render('register_success')     
-    } else {
-      res.render('user_exists')
-    }
-  } catch {
-    res.send("Internal server error");
-  }
-});
+app.post("/register",registerUser);
 
 // Setup our admin user
-app.get("/setup", async (req, res) => {
-  const exists = await User.exists({ username: "admin" });
-
-  if (exists) {
-    console.log("exits");
-    res.redirect("/login");
-    return;
-  }
-
-  bcrypt.genSalt(10, function (err, salt) {
-    if (err) return next(err);
-    bcrypt.hash("pass", salt, function (err, hash) {
-      if (err) return next(err);
-
-      const newAdmin = new User({
-        username: "admin",
-        password: hash,
-      });
-
-      newAdmin.save();
-
-      res.redirect("/login");
-    });
-  });
-});
+app.get("/setup", setupAdmin);
