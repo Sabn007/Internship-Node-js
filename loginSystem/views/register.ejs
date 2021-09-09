@@ -8,16 +8,19 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <form action="/login" method="POST">
+    <form action="/register" method="POST">
     <div>
-        <% if (error) { %> 
-        <p class="err-msg">Username or password is incorrect</p>
-        <%} %>
-        <h1>Login</h1>
+        
+        <h1>Register</h1>
     </div>
     <div class="form-group">
         <label> Username:</label>
         <input type="text" id="username" name="username" placeholder="Enter Your Username" required>
+    
+    </div>
+    <div class="form-group">
+        <label> Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
     
     </div>
     
@@ -26,8 +29,9 @@
         <input type="password" id="password" name="password" placeholder="Enter Your password" required >
     
     </div>
-    <div><input type="submit" value="Login"></div>
-    <a href="/register">Register</a>
+    <div><input type="submit" value="Register"></div>
+
+    <a href="/login">Login</a>
     
     
     </form>
