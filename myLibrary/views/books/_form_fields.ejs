@@ -12,7 +12,7 @@
             <% if(author.id===book.author) {%>
                 <option label="<%= author.name%>" value="<%= author.id%>">
                     <% } else { %>
-                <option label="<%= author.name %> " value="<%= author.id %> ">
+                <option label="<%= author.name %> " value="<%= author.id %>">
                     <% } %>
                         <% }) %>
     </select>
@@ -35,7 +35,7 @@
 <div>
 
     <label>Page Cover</label>
-    <input type="file" name="cover"  id="cover">
+    <input type="file" name="cover" class="filepond">
 </div>
 <div>
 

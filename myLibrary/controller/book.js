@@ -1,5 +1,3 @@
-
-
 const path = require('path')
 const fs = require('fs')
 const Author = require('../models/author')
@@ -13,9 +11,30 @@ exports.newBook = async (req,res)=>{
 }
 
 exports.allBook = async(req,res)=>{
-    res.send("All books")
+    let query = Book.find()
+    if(req.query.title != null && req.query.title != " "){
+        query = query.regex('title',new RegExp(req.query.title,'i'))
+    }
+    if(req.query.publishBefore != null && req.query.publishBefore != " "){
+        query = query.lte('publishDate',req.query.publishBefore)
+    }
+    if(req.query.publishAfter != null && req.query.publishAfter != " "){
+        query = query.gte('publishDate',req.query.publishAfter)
+    }
    
-       
+    try {
+        const books = await query.exec()
+        res.render('books/index',{
+            books:books,
+            searchOptions:req.query
+            
+            })
+        
+    } catch  {
+        res.redirect('/')
+        
+    }
+   
    }
 exports.createBook = async (req,res)=>{
     const fileName = req.file != null ? req.file.filename : null
@@ -44,7 +63,7 @@ exports.createBook = async (req,res)=>{
 
 function removeBookCover (fileName){
     fs.unlink(path.join(uploadPath ,fileName),err =>{
-      if(err) console.err(err)  
+      if(err) console.error(err)  
     })
 }
 async function renderNewPage(res, book, hasError = false){

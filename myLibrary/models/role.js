@@ -15,9 +15,6 @@ const roleSchema = new mongoose.Schema({
   type: String,
   default: 'basic',
   enum: ["user", "visitor", "admin"]
- },
- accessToken: {
-  type: String
  }
 });
 
