@@ -21,7 +21,7 @@ router.get('/',allBook)
 router.get('/new',newBook)
 
 //Create Book route
-router.post('/',upload.single('cover'), createBook)
+router.post('/', upload.single('cover'), createBook)
 
 
 router.get('/:id',getBook)

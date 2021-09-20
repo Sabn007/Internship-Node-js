@@ -12,7 +12,7 @@
     Description : <%= book.description %>
 </div>
 
-<a href="books/<%= book.id %>/edit">edit</a>
+<a href="/books/<%= book.id %>/edit">edit</a>
 <%- include('../partial/delete',
 { url :`/books/${book.id}`})  %> 
  
