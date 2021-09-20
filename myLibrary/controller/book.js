@@ -6,7 +6,12 @@ const uploadPath = path.join('public',Book.coverImageBasePath)
 
 
 exports.newBook = async (req,res)=>{
-    renderNewPage(res, new Book())
+    try {
+       const book =await  Book.findById(req.params.id) 
+        renderEditPage(res,book)
+    } catch  {
+        res.redirect('/')
+    }
     
 }
 
@@ -48,7 +53,7 @@ exports.createBook = async (req,res)=>{
     }) 
     try{
         const newBook = await book.save()
-        res.redirect('books')
+        res.redirect('/books')
     }
     catch{
         if(book.coverImageName != null){
@@ -66,18 +71,45 @@ function removeBookCover (fileName){
       if(err) console.error(err)  
     })
 }
+exports.editBook = async (req, res) => {
+    try {
+      const book = await Book.findById(req.params.id)
+      renderEditPage(res, book)
+    } catch {
+      res.redirect('/')
+    }
+  }
+
 async function renderNewPage(res, book, hasError = false){
-    try{
-        const authors = await Author.find({})
-        const params = {
-            authors:authors,
-            book:book
-        }
-        if(hasError) params.errorMessage = 'Error Creating Book'
-        res.render('books/new', params)
-    
-    
-     }catch{
-        res.redirect('/books')
-     }
+    renderFormPage(res, book, 'new',hasError)
 }
+async function renderEditPage(res, book, hasError = false){
+    renderFormPage(res, book, 'edit',hasError)
+}
+
+exports.getBook = async (req,res)=>{
+    try {
+        const book = await Book.findById(req.params.id).populate('author').exec()
+        res.render('books/show', {book:book})
+    } catch  {
+        res.redirect('/')
+    }
+    }
+
+
+
+    async function renderFormPage(res, book, form,hasError = false){
+        try{
+            const authors = await Author.find({})
+            const params = {
+                authors:authors,
+                book:book
+            }
+            if(hasError) params.errorMessage = 'Error Creating Book'
+            res.render(`books/${form}`, params)
+        
+        
+         }catch{
+            res.redirect('/books')
+         }
+    }
