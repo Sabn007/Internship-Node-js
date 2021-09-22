@@ -47,7 +47,7 @@ exports.createBook = async (req, res) => {
     pageCount: req.body.pageCount,
     coverImageName: {
       path: req.file.mimetype,
-      originalName: req.file.originalName,
+      // originalName: req.file.originalName,
       mimetype: req.file.mimetype,
     },
     description: req.body.description,
