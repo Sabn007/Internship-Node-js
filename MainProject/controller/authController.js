@@ -40,7 +40,7 @@ const signup_get = (req, res) => {
   res.render("signup");
 };
 const login_get = (req, res) => {
-  res.render("login");
+  res.render("login", { layout: false });
 };
 
 //HANDLE SIGNUP POST REQUESTS

@@ -1,7 +1,7 @@
 <div>
 
     <label>Title</label>
-    <input type="text" name="title" id="title" value="<%= book.title %>">
+    <input type="text" name="title" id="title" value="<%= book.title %>" autocomplete="off">
 </div>
 <div>
 
@@ -21,7 +21,7 @@
 
     <label>Publish Date</label>
     <input type="date" name="publishDate" id="publishDate"
-        value="<%= book.publishDate%>">
+        value="<%= book.publishDate%>" autocomplete="off">
 
 </div>
 
@@ -29,7 +29,7 @@
 
     <label>Page Count</label>
     <input type="number" name="pageCount" min="1" id="pageCount"
-        value="<%= book.pageCount %> ">
+        value="<%= book.pageCount %> " autocomplete="off">
 </div>
 
 <div>
@@ -40,7 +40,7 @@
 <div>
 
     <label>Description</label>
-    <textarea  name="Description"  id="Description">
+    <textarea  name="Description"  id="Description" autocomplete="off">
         <%= book.desciption %> 
     </textarea>
 

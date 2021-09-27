@@ -25,7 +25,7 @@ const bookSchema = new mongoose.Schema({
     },
     originalName: {
       type: String,
-      required: true,
+      required: false,
     },
     mimetype: {
       type: String,
@@ -42,7 +42,7 @@ const bookSchema = new mongoose.Schema({
 
 // bookSchema.virtual("coverImagePath").get(function () {
 //   if (this.coverImageName != null) {
-//     return path.join("/", coverImageBasePath, this.coverImageName);
+//     return path.join("/", coverImageBasePath, this.coverImageName.path);
 //   }
 // });
 

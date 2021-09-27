@@ -39,14 +39,15 @@ exports.allBook = async (req, res) => {
 };
 exports.createBook = async (req, res) => {
   const fileName = req.file != null ? req.file.filename : null;
-  console.log("req.file", req.file);
+  let newPath = req.file.path.replace(/[/\/]/g, '/')
+  console.log("req.file test", newPath);
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
     publishDate: req.body.publishDate,
     pageCount: req.body.pageCount,
     coverImageName: {
-      path: req.file.mimetype,
+      path: newPath,
       // originalName: req.file.originalName,
       mimetype: req.file.mimetype,
     },

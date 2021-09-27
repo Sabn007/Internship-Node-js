@@ -1,6 +1,6 @@
 <h2>Search Books</h2>
 
-<form action="/books" method="GET">
+<form action="/books" method="GET" autocomplete="off">
     <div>
 
         <label>Title</label>
@@ -23,7 +23,7 @@
     <% books.forEach(book => { %>
         <div>
             <a href="/books/<%= book.id %>">
-         <img src="<%= book.coverImagePath %> " alt="" height="150" width="100">
+         <img src="/<%= book.coverImageName.path %> " alt="" height="150" width="100">
         </a>
          <h2><%= book.title %> </h2>
         </div>
