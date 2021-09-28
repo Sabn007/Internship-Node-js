@@ -1,5 +1,18 @@
 <%- include('partials/headers'); -%>
 
+   
+<h2>Recentely added</h2>
+<div>
+    
+    <% books.forEach(book => { %>
+        <div>
+            <a href="/books/<%= book.id %>">
+         <img src=" <%= book.coverImageName.path %> " alt="" height="150" width="100">
+        </a>
+         <h2><%= book.title %> </h2>
+        </div>
+        <% }) %>
+    </div>
 
     
     <%- include('partials/footer'); -%>

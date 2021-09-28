@@ -1,7 +1,7 @@
 <h2>
     <%= book.title %>
 </h2>
-<img src="/<%= book.coverImageName.path %> " alt="">
+<img src="<%= book.coverImageName.path %> " alt="">
 
 <div>
     Publish Date : <%= book.publishDate%>
@@ -13,6 +13,6 @@
 </div>
 
 <a href="/books/<%= book.id %>/edit">edit</a>
-<%- include('../partial/delete',
+<%- include('../partials/delete',
 { url :`/books/${book.id}`})  %> 
  

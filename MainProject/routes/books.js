@@ -10,6 +10,8 @@ const {
   newBook,
   getBook,
   editBook,
+  updateBook,
+  deleteBook
 } = require("../controller/book");
 const uploadPath = path.join("public", Book.coverImageBasePath);
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -55,5 +57,9 @@ router.post("/", upload.single("cover"), requireAuth, createBook);
 router.get("/:id", getBook);
 
 router.get("/:id/edit", editBook);
+
+router.put('/:id',updateBook) 
+router.delete('/:id',deleteBook) 
+
 
 module.exports = router;

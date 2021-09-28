@@ -1,4 +1,5 @@
 const express = require("express");
+
 const mongoose = require("mongoose");
 const authRouter = require("./routes/authRouter.js");
 const indexRouter = require('./routes/index')
@@ -25,26 +26,26 @@ app.set('views',__dirname + '/views')
 app.set('layout','layouts/layout')
 
 // database connection
-// mongoose.connect("mongodb://localhost/loginJWT", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useCreateIndex: true,
-//   })
-//   .then((result) => app.listen(3000, ()=>{
-//     console.log("Server running at port 3000")
-//     console.log('Connected to Mongoose')
-//   }))
-//   .catch((err) => console.log(err));
+mongoose.connect("mongodb://localhost/loginJWT", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then((result) => app.listen(3000, ()=>{
+    console.log("Server running at port 3000")
+    console.log('Connected to Mongoose')
+  }))
+  .catch((err) => console.log(err));
 
 //  For Cloud Database
 
-mongoose.connect('mongodb+srv://testUser:test1234@mevn.90fgg.mongodb.net/sabinDb?retryWrites=true&w=majority').then(() => {
-    // listing to server
-    app.listen(5000, () => {
-        console.log(`Server running on port 3000`)
-        console.log('Connected to Mongoose')
-    })
-}).catch(err => console.log(err))
+// mongoose.connect('mongodb+srv://testUser:test1234@mevn.90fgg.mongodb.net/sabinDb?retryWrites=true&w=majority').then(() => {
+//     // listing to server
+//     app.listen(5000, () => {
+//         console.log(`Server running on port 3000`)
+//         console.log('Connected to Mongoose')
+//     })
+// }).catch(err => console.log(err))
 
 // routes
 app.get("*", checkUser)
