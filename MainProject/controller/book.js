@@ -76,6 +76,7 @@ function removeBookCover(fileName) {
 exports.editBook = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
+    console.log('book data', book)
     renderEditPage(res, book);
   } catch {
     res.redirect("/");

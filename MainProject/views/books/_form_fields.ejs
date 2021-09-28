@@ -1,47 +1,60 @@
 <div>
-
-    <label>Title</label>
-    <input type="text" name="title" id="title" value="<%= book.title %>" autocomplete="off">
+  <label>Title</label>
+  <input
+    type="text"
+    name="title"
+    id="title"
+    value="<%= book.title %>"
+    autocomplete="off"
+  />
 </div>
 <div>
-
-    <label>Author</label>
-    <select name="author">
-
-        <% authors.forEach(author=> { %>
-            <% if(author.id===book.author) {%>
-                <option label="<%= author.name%>" value="<%= author.id%>">
-                    <% } else { %>
-                <option label="<%= author.name %> " value="<%= author.id %>">
-                    <% } %>
-                        <% }) %>
-    </select>
+  <label>Author</label>
+  <select name="author">
+    <% authors.forEach(author=> { %>
+    <option
+      label="<%= author.name %>"
+      value="<%= author.id %>"
+      selected="<%= author.id===book.author ? 'selected': '' %>"
+    >
+      <% }) %>
+    </option>
+  </select>
 </div>
 <div>
-
-    <label>Publish Date</label>
-    <input type="date" name="publishDate" id="publishDate"
-        value="<%= book.publishDate%>" autocomplete="off">
-
-</div>
-
-<div>
-
-    <label>Page Count</label>
-    <input type="number" name="pageCount" min="1" id="pageCount"
-        value="<%= book.pageCount %> " autocomplete="off">
+  <label>Publish Date</label>
+  <input
+    type="date"
+    name="publishDate"
+    id="publishDate"
+    value="<%= book.publishDate %>"
+    autocomplete="off"
+  />
 </div>
 
 <div>
+  <label>Page Count</label>
+  <input
+    type="number"
+    name="pageCount"
+    min="1"
+    id="pageCount"
+    value="<%= book.pageCount %>"
+    autocomplete="off"
+  />
+</div>
 
-    <label>Page Cover</label>
-    <input type="file" name="cover" >
+<div>
+  <label>Page Cover</label>
+  <% if(book.coverImageName && book.coverImageName.path) { %> 
+  <img src="<%= book.coverImageName.path %>" />
+  <% } %>
+  <input type="file" name="cover" />
 </div>
 <div>
-
-    <label>Description</label>
-    <textarea  name="Description"  id="Description" autocomplete="off">
+  <label>Description</label>
+  <textarea name="description" id="Description" autocomplete="off">
         <%= book.desciption %> 
-    </textarea>
-
+    </textarea
+  >
 </div>
