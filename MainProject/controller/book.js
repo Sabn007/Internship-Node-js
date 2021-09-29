@@ -3,6 +3,7 @@ const fs = require("fs");
 const Author = require("../models/author");
 const Book = require("../models/book");
 const uploadPath = path.join("public", Book.coverImageBasePath);
+const { isEmpty } = require("lodash");
 
 exports.newBook = async (req, res) => {
   try {
@@ -38,11 +39,9 @@ exports.allBook = async (req, res) => {
   }
 };
 exports.createBook = async (req, res) => {
-  const fileName = req.file != null ? req.file.filename : null;
-  let newPath = req.file.path.replace(/[/\/]/g, '/')
-  newPath = newPath.slice(6)
-  console.log("req.file test", newPath);
-  
+  let newPath = req.file.path.replace(/[/\/]/g, "/");
+  newPath = newPath.slice(6);
+
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
@@ -56,7 +55,6 @@ exports.createBook = async (req, res) => {
     description: req.body.description,
   });
   try {
-   
     const newBook = await book.save();
     res.redirect("/books");
   } catch (err) {
@@ -76,7 +74,6 @@ function removeBookCover(fileName) {
 exports.editBook = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
-    console.log('book data', book)
     renderEditPage(res, book);
   } catch {
     res.redirect("/");
@@ -114,42 +111,49 @@ async function renderFormPage(res, book, form, hasError = false) {
 }
 
 exports.updateBook = async (req, res) => {
-  let book
-
+  let newImage = req.file;
+  // console.log('newImage', req)
+  let book;
   try {
-    book = await Book.findById(req.params.id)
-    book.title = req.body.title
-    book.author = req.body.author
-    book.publishDate = new Date(req.body.publishDate)
-    book.pageCount = req.body.pageCount
-    book.description = req.body.description
-    // if (req.body.cover != null && req.body.cover !== '') {
-    //   coverImageName(book, req.body.cover)
-    // }
-    await book.save()
-    res.redirect(`/books/${book.id}`)
+    book = await Book.findById(req.params.id);
+    // console.log('books', book)
+    book.title = req.body.title;
+    book.author = req.body.author;
+    book.publishDate = new Date(req.body.publishDate);
+    book.pageCount = req.body.pageCount;
+    book.description = req.body.description;
+    if (newImage) {
+      let newPath = req.file.path.replace(/[/\/]/g, "/");
+      newPath = newPath.slice(6);
+      book.coverImageName = {
+        path: newPath,
+        mimetype: req.file.mimetype,
+      }
+    }
+    await book.save();
+    res.redirect(`/books/${book.id}`);
   } catch {
     if (book != null) {
-      renderEditPage(res, book, true)
+      renderEditPage(res, book, true);
     } else {
-      redirect('/')
+      redirect("/");
     }
   }
-}
+};
 exports.deleteBook = async (req, res) => {
-  let book
+  let book;
   try {
-    book = await Book.findById(req.params.id)
-    await book.remove()
-    res.redirect('/books')
+    book = await Book.findById(req.params.id);
+    await book.remove();
+    res.redirect("/books");
   } catch {
     if (book != null) {
-      res.render('books/show', {
+      res.render("books/show", {
         book: book,
-        errorMessage: 'Could not remove book'
-      })
+        errorMessage: "Could not remove book",
+      });
     } else {
-      res.redirect('/')
+      res.redirect("/");
     }
   }
-} 
+};

@@ -1,18 +1,18 @@
 <div class="form-row">
   <div class="form-item">
     <label>Title</label>
-    <input type="text" name="title" value="<%= book.title %>">
+    <input type="text" name="title" value="<%= book.title %>" />
   </div>
   <div class="form-item">
     <label>Author</label>
     <select name="author">
       <% authors.forEach(author => { %>
-        <option
+      <option
         label="<%= author.name %>"
         value="<%= author.id %>"
         selected="<%= author.id===book.author ? 'selected': '' %>"
       >
-      <% }) %>
+        <% }) %>
       </option>
     </select>
   </div>
@@ -21,19 +21,40 @@
 <div class="form-row">
   <div class="form-item">
     <label>Publish Date</label>
-    <input type="date" name="publishDate"
-          value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>">
+    <input
+      type="date"
+      name="publishDate"
+      value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>"
+    />
   </div>
   <div class="form-item">
     <label>Page Count</label>
-    <input type="number" name="pageCount" min="1" value="<%= book.pageCount %>">
+    <input
+      type="number"
+      name="pageCount"
+      min="1"
+      value="<%= book.pageCount %>"
+    />
   </div>
 </div>
+
+<% console.log('book', book) %>
 
 <div class="form-row">
   <div class="form-item form-item-no-grow">
     <label>Cover</label>
-    <input type="file" name="cover" class="book-cover" >
+    <% if(book.coverImageName && book.coverImageName.path){ %>
+    <img src="<%= book.coverImageName.path %>" style="height: 150px" />
+    <% } %>
+    <input type="file" name="cover" class="book-cover" />
+    <!-- <% if(book.coverImageName && book.coverImageName.path){ %>
+    <input
+      type="hidden"
+      name="old_cover"
+      value="<%= book.coverImageName.path %>"
+      class="book-cover"
+    />
+    <% } %> -->
   </div>
   <div class="form-item">
     <label>Description</label>

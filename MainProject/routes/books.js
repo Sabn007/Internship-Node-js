@@ -11,29 +11,27 @@ const {
   getBook,
   editBook,
   updateBook,
-  deleteBook
+  deleteBook,
 } = require("../controller/book");
 const uploadPath = path.join("public", Book.coverImageBasePath);
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadPath);
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + "--" + file.originalname);
-    }
-});  
+  destination: function (req, file, cb) {
+    cb(null, uploadPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
 
 const fileFilter = (req, file, cb) => {
-    if(imageMimeTypes.includes(file.mimetype)){
-        cb(null, true);
-    } else{
-        cb(null, false);
-
-    }
-
+  if (imageMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
 };
-const upload = multer({ storage: storage, fileFilter: fileFilter,});
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 // const upload = multer({
 //   dest: uploadPath,
 //   filename: function (req, file, cb) {
@@ -56,10 +54,9 @@ router.post("/", upload.single("cover"), requireAuth, createBook);
 
 router.get("/:id", getBook);
 
-router.get("/:id/edit",requireAuth, editBook);
+router.get("/:id/edit", requireAuth, editBook);
 
-router.put('/:id',requireAuth,updateBook) 
-router.delete('/:id',requireAuth,deleteBook) 
-
+router.put("/:id", upload.single("cover"), requireAuth, updateBook);
+router.delete("/:id", requireAuth, deleteBook);
 
 module.exports = router;
