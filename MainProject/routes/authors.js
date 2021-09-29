@@ -22,9 +22,9 @@ router.get("/new", requireAuth, getAuthor);
 router.post("/", requireAuth, createAuthor);
 
 router.get("/:id", showAuthor);
-router.get("/:id/edit", editAuthor);
+router.get("/:id/edit",requireAuth, editAuthor);
 
-router.put("/:id", updateAuthor);
-router.delete("/:id", deleteAuthor);
+router.put("/:id", requireAuth,updateAuthor);
+router.delete("/:id", requireAuth,deleteAuthor);
 
 module.exports = router;

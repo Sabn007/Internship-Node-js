@@ -37,7 +37,7 @@ const createToken = (id) => {
 };
 
 const signup_get = (req, res) => {
-  res.render("signup");
+  res.render("signup", { layout: false });
 };
 const login_get = (req, res) => {
   res.render("login", { layout: false });

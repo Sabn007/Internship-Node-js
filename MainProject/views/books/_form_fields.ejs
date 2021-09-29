@@ -1,47 +1,42 @@
-<div>
-
+<div class="form-row">
+  <div class="form-item">
     <label>Title</label>
-    <input type="text" name="title" id="title" value="<%= book.title %>" autocomplete="off">
-</div>
-<div>
-
+    <input type="text" name="title" value="<%= book.title %>">
+  </div>
+  <div class="form-item">
     <label>Author</label>
     <select name="author">
-
-        <% authors.forEach(author=> { %>
-            <% if(author.id===book.author) {%>
-                <option label="<%= author.name%>" value="<%= author.id%>">
-                    <% } else { %>
-                <option label="<%= author.name %> " value="<%= author.id %>">
-                    <% } %>
-                        <% }) %>
+      <% authors.forEach(author => { %>
+        <option
+        label="<%= author.name %>"
+        value="<%= author.id %>"
+        selected="<%= author.id===book.author ? 'selected': '' %>"
+      >
+      <% }) %>
+      </option>
     </select>
+  </div>
 </div>
-<div>
 
+<div class="form-row">
+  <div class="form-item">
     <label>Publish Date</label>
-    <input type="date" name="publishDate" id="publishDate"
-        value="<%= book.publishDate%>" autocomplete="off">
-
-</div>
-
-<div>
-
+    <input type="date" name="publishDate"
+          value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>">
+  </div>
+  <div class="form-item">
     <label>Page Count</label>
-    <input type="number" name="pageCount" min="1" id="pageCount"
-        value="<%= book.pageCount %>" autocomplete="off">
+    <input type="number" name="pageCount" min="1" value="<%= book.pageCount %>">
+  </div>
 </div>
 
-<div>
-
-    <label>Page Cover</label>
-    <input type="file" name="cover" >
-</div>
-<div>
-
+<div class="form-row">
+  <div class="form-item form-item-no-grow">
+    <label>Cover</label>
+    <input type="file" name="cover" class="book-cover" >
+  </div>
+  <div class="form-item">
     <label>Description</label>
-    <textarea  name="Description"  id="Description" autocomplete="off">
-        <%= book.desciption %> 
-    </textarea>
-
+    <textarea name="description"><%= book.description %></textarea>
+  </div>
 </div>

@@ -56,7 +56,7 @@ exports.createBook = async (req, res) => {
     description: req.body.description,
   });
   try {
-    console.log("book data", book);
+   
     const newBook = await book.save();
     res.redirect("/books");
   } catch (err) {
@@ -76,6 +76,7 @@ function removeBookCover(fileName) {
 exports.editBook = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
+    console.log('book data', book)
     renderEditPage(res, book);
   } catch {
     res.redirect("/");

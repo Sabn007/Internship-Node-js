@@ -1,18 +1,22 @@
-<h2>
-    <%= book.title %>
-</h2>
-<img src="<%= book.coverImageName.path %> " alt="">
-
-<div>
-    Publish Date : <%= book.publishDate%>
+<h2 class="page-header"><%= book.title %></h2>
+<div class="book-details">
+  <div>
+    <img class="book-cover" src="<%= book.coverImageName.path %>">
+    <div class="book-details-btn-grid">
+      <a class="btn btn-primary" href="/books/<%= book.id %>/edit">Edit</a>
+      <%- include('../partials/delete', { url: `/books/${book.id}` }) %>
+      <a class="btn btn-primary book-details-author-button" href="/authors/<%= book.author.id %>">View Author</a>
+    </div>
+  </div>
+  <div class="book-details-grid">
+    <div class="book-details-label">Author:</div>
+    <div><%= book.author.name %></div>
+    <div class="book-details-label">Publish Date:</div>
+    <div><%= book.publishDate.toDateString() %></div>
+    <div class="book-details-label">Page Count:</div>
+    <div><%= book.pageCount %></div>
+    <div class="book-details-label">Description:</div>
+    <div><%= book.description %></div>
+  </div>
 </div>
-<div>Page Count : <%= book.pageCount %>
-</div>
-<div>
-    Description : <%= book.description %>
-</div>
-
-<a href="/books/<%= book.id %>/edit">edit</a>
-<%- include('../partials/delete',
-{ url :`/books/${book.id}`})  %> 
  

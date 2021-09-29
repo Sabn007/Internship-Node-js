@@ -56,10 +56,10 @@ router.post("/", upload.single("cover"), requireAuth, createBook);
 
 router.get("/:id", getBook);
 
-router.get("/:id/edit", editBook);
+router.get("/:id/edit",requireAuth, editBook);
 
-router.put('/:id',updateBook) 
-router.delete('/:id',deleteBook) 
+router.put('/:id',requireAuth,updateBook) 
+router.delete('/:id',requireAuth,deleteBook) 
 
 
 module.exports = router;
