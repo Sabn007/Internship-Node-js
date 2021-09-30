@@ -8,7 +8,7 @@ const {
   deleteAuthor,
   showAuthor,
 } = require("../controller/author");
-const { requireAuth, checkUser } = require("../middleware/authMiddleware");
+const { requireAuth } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 

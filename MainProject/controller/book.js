@@ -129,6 +129,13 @@ exports.updateBook = async (req, res) => {
         path: newPath,
         mimetype: req.file.mimetype,
       }
+      try {
+        fs.unlinkSync('./' + req.body.old_image)
+      } catch (err) {
+        console.log(err);
+      }
+    }else{
+      new_image = req.body.old_image
     }
     await book.save();
     res.redirect(`/books/${book.id}`);

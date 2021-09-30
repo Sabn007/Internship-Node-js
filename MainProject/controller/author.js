@@ -76,6 +76,7 @@ exports.deleteAuthor = async (req,res)=>{
         author = await Author.findById(req.params.id)
        
         await author.remove()
+        
         res.redirect(`/authors`)
        
     } catch{
@@ -99,6 +100,7 @@ exports.showAuthor = async (req,res) =>{
             author :author,
             booksByAuthor :books
         })
+       
     } catch (err) {
     console.log(err);{
         res.redirect('/')
